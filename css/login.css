@@ -15,8 +15,9 @@
   }
 
   form {
-    width: 380px;             
-    padding: 40px 30px;
+    width: 50%;
+    height: 60%;           
+    padding: 50px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,8 +60,8 @@
     margin-top: 20px;
     border-radius: 12px;
     border: none;
-    background: #fff;
-    color: #000;
+    background: #023814;
+    color: #ffffff;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
@@ -68,8 +69,8 @@
   }
 
   button:hover {
-    background: #023814;
-    color: #fff;
+    background: #ffffff;
+    color:#023814;
   }
 
   p {
@@ -92,7 +93,8 @@
   /* ===== Responsive ===== */
   @media (max-width: 768px) {
     form {
-      width: 320px;
+      width: 70%;
+      height: 50%;
       padding: 35px 25px;
     }
     h2 {
@@ -109,7 +111,8 @@
 
   @media (max-width: 480px) {
     form {
-      width: 90%;
+      width:100%;
+      height: 70%;
       padding: 30px 20px;
     }
     h2 {
