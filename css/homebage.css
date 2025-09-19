@@ -119,11 +119,10 @@ body {
 /* Cards Styles */
 .article-card, .service-card {
   background-color: var(--secondary-color);
-  border-radius: 10px;
   box-shadow: var(--shadow-light);
   text-align: center;
   transition: 0.4s;
-  border-radius: 100px;
+  border-radius: 50px;
 }
 .article-card:hover, .service-card:hover {
   transform: translateY(-10px);
@@ -140,9 +139,7 @@ body {
 }
 .service-card h3 {
   font-size: 22px;
-  margin-bottom: 12px;
   color: var(--primary-color);
-  font-weight: 600;
 }
 .service-card p {
   font-size: 16px;
@@ -150,11 +147,9 @@ body {
   color: var(--third-color);
   line-height: 1.5;
 }
-
 .service-card {
   flex: 1 1 calc(50% - 40px);
-  min-width: 300px;
-  padding: 20px 30px;
+  padding: 10px 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -174,10 +169,10 @@ body {
   padding: 20px 40px;
 }
 .article-card {
-  flex: 1 1 calc(50% - 40px);
+   flex: 1 1 calc(50% - 40px);
     background-color: var(--secondary-color);
     border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1); 
+    box-shadow: var(--shadow-light);
     overflow: hidden;
     text-align: center;
     transition: 0.3s;
@@ -185,7 +180,7 @@ body {
 
 .article-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-strong);
 }
 
 .article-card img {
