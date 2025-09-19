@@ -21,6 +21,7 @@ body {
   background-image: url("../imge/background.png");
   background-repeat:no-repeat ;
   background-size: cover;
+  background-attachment: fixed;
   color: var(--third-color);
   display: flex;
   flex-direction: column;
