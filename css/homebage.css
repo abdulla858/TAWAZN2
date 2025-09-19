@@ -1,3 +1,4 @@
+/* Variables for colors and spacing */
 :root {
   --primary-color: #4CAF50;
   --secondary-color: #f4f4f4;
@@ -8,6 +9,7 @@
   --shadow-strong: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* Global Styles */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -59,7 +61,7 @@ body {
   color: var(--secondary-color);
   text-decoration: none;
   font-size: 16px;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 
 .main-nav a:hover,
@@ -69,7 +71,7 @@ body {
   transform: scale(1.05);
 }
 
-/* Main Content  */
+/* Main Content - General */
 .main-content, .main-contact {
   flex: 1;
   width: 100%;
@@ -84,24 +86,20 @@ body {
   color: #2f1e1e;
   text-align: center;
 }
-
 /* Hero Section */
 .hero-content {
   z-index: 2;
   padding: 20px;
 }
-
 .hero-content h2 {
   font-size: 32px;
   margin-bottom: 15px;
 }
-
 .hero-content p {
   font-size: 19px;
   max-width: 700px;
   margin: 0 auto;
 }
-
 .hero-content button {
   display: inline-block;
   background: var(--primary-color);
@@ -109,27 +107,23 @@ body {
   padding: 12px 30px;
   margin-top: 20px;
   border-radius: 8px;
-  transition: all 0.3s ease;
+  transition: transform 0.3s;
   border: none;
   cursor: pointer;
   font-size: 16px;
 }
-
 .hero-content button:hover {
   background-color: var(--text-color);
   transform: translateY(-2px);
 }
-
 /* Common Section Title */
 .section-title {
   font-size: 24px;
-  font-weight: bold;
   color: var(--primary-color);
   text-align: center;
   margin-bottom: 32px;
 }
-
-/*  CardS */
+/* Common Card Styles */
 .card, .article-card, .service-card {
   background-color: var(--secondary-color);
   border-radius: 10px;
@@ -137,12 +131,10 @@ body {
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
 }
-
 .card:hover, .article-card:hover, .service-card:hover {
   transform: translateY(-10px);
   box-shadow: var(--shadow-strong);
 }
-
 /* Services Cards */
 .services-card {
   display: flex;
@@ -152,7 +144,6 @@ body {
   gap: 20px;
   padding: 20px 40px;
 }
-
 .service-card {
   flex: 1 1 calc(33.33% - 40px);
   min-width: 300px;
@@ -161,13 +152,11 @@ body {
   flex-direction: column;
   justify-content: space-between;
 }
-
 .service-card i {
   font-size: 48px;
   color: var(--primary-color);
   margin-bottom: 15px;
 }
-
 /* Articles Cards */
 .articles-container {
     display: flex;
@@ -179,10 +168,6 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
-
-.page-content{
-  padding: 30Px 0 ;
-}
 .article-card {
     flex: 1 1 calc(33%);
     background-color: var(--secondary-color);
@@ -190,7 +175,7 @@ body {
     box-shadow: 0 6px 12px rgba(0,0,0,0.1); 
     overflow: hidden;
     text-align: center;
-    transition: transform 0.3s;
+    transition: 0.3s;
 }
 
 .article-card:hover {
@@ -202,7 +187,7 @@ body {
   width: 100%;        
   max-height: 180px;         
   object-fit: cover;  
-  transition: transform 0.3s;
+  transition: 0.3s;
 }
 
 .article-card:hover img {
@@ -235,7 +220,7 @@ body {
   border-radius: 8px;
   text-decoration: none;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 
 .btn-small:hover {
@@ -243,6 +228,9 @@ body {
   color: var(--secondary-color);
   transform: translateY(-2px);
 }
+
+
+
 /* Footer */
 .main-footer {
   background-color: var(--footer-bg-color);
@@ -265,10 +253,10 @@ body {
 .social-icons a:hover {
   color: var(--primary-color);
 }
-/* wowslider */
+/* Contact Section */
 .hero_wos{
-    width: 70%;
-    margin: 20px auto;
+  width: 70%;
+  margin: 20px auto;
 }
 .place_space{
   display: flex;
@@ -277,68 +265,32 @@ body {
   align-items: center;
 }
 /* Media Queries */
-@media (max-width: 1200px) {
-  .services-card, .articles-container {
-    gap: 16px;
-    padding: 20px;
-  }
-}
-@media (max-width: 992px) {
-  .main-nav ul {
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .hero-content h2 {
-    font-size: 26px;
-  }
-  .hero-content p {
-    font-size: 16px;
-  }
-
-}
-@media (max-width: 768px) {
-  .main-header ,.main-footer {
+@media (max-width: 800px) {
+  .main-header,
+  .main-footer {
     flex-direction: column;
-    gap: 10px;
     text-align: center;
+    padding: 16px;
+    gap: 16px;
   }
-  .services-card,
+  .main-nav ul {
+    flex-direction: row;
+    gap: 16px;
+  }
+}
+@media(max-width: 970px){
+    .services-card,
   .articles-container {
     flex-direction: column;
     align-items: center;
-  }
-
-  .service-card,
-  .article-card {
-    width: 100%;
-    max-width: 500px;
-  }
-  .hero_wos{
-    width: 100%;
-    height: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-content h2 {
-    font-size: 22px;
   }
   .hero_wos{
     width: 90%;
     margin: 20px auto;
   }
-  .hero-content p {
-    font-size: 14px;
-  }
-  .main-header .logo h1 {
-    font-size: 24px;
-  }
-  .section-title {
-    font-size: 20px;
-  }
-  .hero-content button, .btn-small {
+  .service-card,
+  .article-card {
+    min-width: auto;
     width: 100%;
-    padding: 12px;
   }
 }
