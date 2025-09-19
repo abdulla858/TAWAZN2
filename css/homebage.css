@@ -270,7 +270,7 @@ body {
   align-items: center;
 }
 /* Media Queries */
-/* @media (max-width: 800px) {
+@media (max-width: 970px) {
   .main-header,
   .main-footer {
     flex-direction: column;
@@ -283,7 +283,7 @@ body {
     gap: 16px;
   }
 }
-@media(max-width: 970px){
+@media(max-width: 680px){
     .services-card,
   .articles-container {
     flex-direction: column;
@@ -295,7 +295,8 @@ body {
   }
   .service-card,
   .article-card {
-    min-width: auto;
     width: 100%;
+    align-items: stretch;
+    min-width: auto;
   }
-} */
+}
