@@ -265,13 +265,10 @@ body {
 .social-icons a:hover {
   color: var(--primary-color);
 }
-/* Contact Section */
+/* wowslider */
 .hero_wos{
-    height: 60%;
-    width: 75%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 70%;
+    margin: 20px auto;
 }
 .place_space{
   display: flex;
@@ -328,13 +325,13 @@ body {
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 480px) {
   .hero-content h2 {
     font-size: 22px;
   }
   .hero_wos{
-    width: 100%;
-    height: auto;
+    width: 90%;
+    margin: 20px auto;
   }
   .hero-content p {
     font-size: 14px;
