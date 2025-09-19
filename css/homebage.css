@@ -1,10 +1,10 @@
 /* Variables for colors and spacing */
 :root {
-  --primary-color: #4CAF50;
+  --primary-color: #4caf50;
   --secondary-color: #ffffff;
   --third-color: #333;
-  --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --shadow-strong: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --shadow-light: 0 4px 8px rgba(0, 255, 102, 0.219);
+  --shadow-strong: 0 8px 16px #4caf4fc4;
 }
 
 /* Global Styles */
@@ -17,11 +17,11 @@
 body {
   min-height: 100vh;
   font-family: Arial, sans-serif;
-  line-height: 1.6;
+  line-height: 2;
   background-image: url("../imge/background.png");
   background-repeat:no-repeat ;
   background-size: cover;
-  background-attachment: fixed;
+   
   color: var(--third-color);
   display: flex;
   flex-direction: column;
@@ -69,34 +69,30 @@ body {
   transform: scale(1.05);
 }
 
-/* Main Content - General */
+/* Main Content */
 .main-content, .main-contact {
   flex: 1;
-  width: 100%;
   padding: 40px 20px;
 }
-
 .main-content, .main-contact {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #2f1e1e;
+  color: var(--third-color);
   text-align: center;
 }
 /* Hero Section */
 .hero-content {
-  z-index: 2;
   padding: 20px;
 }
 .hero-content h2 {
   font-size: 32px;
-  margin-bottom: 15px;
+  color: var(--primary-color);
 }
 .hero-content p {
   font-size: 19px;
-  max-width: 700px;
-  margin: 0 auto;
+  color: var(--third-color);  
 }
 .hero-content button {
   display: inline-block;
@@ -104,30 +100,29 @@ body {
   color: var(--secondary-color);
   padding: 12px 30px;
   margin-top: 20px;
-  border-radius: 8px;
-  transition: transform 0.3s;
+  border-radius: 15px;
+  transition: 0.5s;
   border: none;
   cursor: pointer;
   font-size: 16px;
 }
 .hero-content button:hover {
   background-color: var(--third-color);
-  transform: translateY(-2px);
+  transform: translateY(-5px);
 }
-/* Common Section Title */
 .section-title {
   font-size: 24px;
   color: var(--primary-color);
   text-align: center;
   margin-bottom: 32px;
 }
-/* Common Card Styles */
+/* Cards Styles */
 .card, .article-card, .service-card {
   background-color: var(--secondary-color);
   border-radius: 10px;
   box-shadow: var(--shadow-light);
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: 0.4s;
 }
 .card:hover, .article-card:hover, .service-card:hover {
   transform: translateY(-10px);
@@ -263,7 +258,7 @@ body {
   align-items: center;
 }
 /* Media Queries */
-@media (max-width: 800px) {
+/* @media (max-width: 800px) {
   .main-header,
   .main-footer {
     flex-direction: column;
@@ -291,4 +286,4 @@ body {
     min-width: auto;
     width: 100%;
   }
-}
+} */
