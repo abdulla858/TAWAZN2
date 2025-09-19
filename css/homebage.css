@@ -298,15 +298,10 @@ body {
 
 }
 @media (max-width: 768px) {
-  .main-header {
+  .main-header ,.main-footer {
     flex-direction: column;
     gap: 10px;
     text-align: center;
-  }
-  .main-footer {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
   }
   .services-card,
   .articles-container {
