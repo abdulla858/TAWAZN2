@@ -37,7 +37,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 24px;
+  padding: 10px 32px;
 }
 .main-header .logo h1 {
   font-size: 35px;
@@ -157,12 +157,20 @@ body {
   color: var(--primary-color);
 }
 /* Articles Cards */
+.page-content{
+  margin-top: 15px;
+}
+.page-content h2{
+  font-size: 30px;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
 .articles-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  padding: 20px 40px;
+  padding: 10px 30px;
 }
 .article-card {
    flex: 1 1 calc(50% - 40px);
