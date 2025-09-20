@@ -84,11 +84,14 @@ body {
 }
 /* Hero Section */
 .hero-content {
-  padding: 20px;
+  padding: 10px;
+  text-align: center;
 }
 .hero-content h2 {
   font-size: 32px;
   color: var(--primary-color);
+  margin-bottom: 20px;
+  font-weight: 600;
 }
 .hero-content p {
   font-size: 19px;
@@ -132,7 +135,6 @@ body {
 .services-card {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 20px;
 }
 .service-card {
@@ -163,7 +165,7 @@ body {
 .page-content h2{
   font-size: 30px;
   color: var(--primary-color);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 .articles-container {
   display: flex;
