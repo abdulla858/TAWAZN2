@@ -241,8 +241,7 @@ body {
 
 .social-icons a {
   color: var(--secondary-color);
-  margin: 0 10px;
-  padding: 8px;
+  margin: 0 8px;
   font-size: 22px;
   transition: color 0.3s ease;
 }
@@ -281,7 +280,7 @@ body {
     align-items: center;
   }
   .hero_wos{
-    width: 100%;
+    width: 90%;
     margin: 20px auto;
   }
     .main-nav ul {
@@ -291,5 +290,7 @@ body {
   .service-card,
   .article-card {
     width: 100%;
+    align-items: stretch;
+    min-width: auto;
   }
 }
