@@ -5,16 +5,63 @@
    <title>Login page</title>
    <meta charset="UTF-8">
    <link rel="stylesheet" href="../../css/login.css">
+   <script>
+      // مثال بيانات مسجلة مسبقًا في LocalStorage
+      if (!localStorage.getItem('users')) {
+         const users = [
+            { username: "admin", password: "1234" },
+            { username: "user1", password: "abcd" }
+         ];
+         localStorage.setItem('users', JSON.stringify(users));
+      }
+
+      function validateLogin(event) {
+         event.preventDefault(); // منع الفورم من الإرسال
+
+         const username = document.getElementsByName('u-name')[0].value;
+         const password = document.getElementsByName('u-pass')[0].value;
+
+         const users = JSON.parse(localStorage.getItem('users'));
+         const userFound = users.find(u => u.username === username && u.password === password);
+
+         if(userFound) {
+            alert("Login successful!");
+            window.location.href = '../../index.html';
+         } else {
+            alert("Invalid username or password.");
+         }
+      }
+
+      function registerUser() {
+         const username = prompt("Enter new username:");
+         const password = prompt("Enter new password:");
+
+         if(username && password) {
+            let users = JSON.parse(localStorage.getItem('users'));
+            if(users.find(u => u.username === username)) {
+               alert("Username already exists!");
+               return;
+            }
+            users.push({ username, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("Registration successful!");
+         } else {
+            alert("Username and password cannot be empty.");
+         }
+      }
+   </script>
 </head>
+
 <body>
-   <form onclick="window.location.href='../../index.html'; return false;">
+   <form onsubmit="validateLogin(event)">
       <h2>Login</h2>
       <input type="text" placeholder="User name" name="u-name" required>
       <input type="password" placeholder="Password" name="u-pass" required>
       <button type="submit">Login</button>
       <p>Don't have an account?
-         <a href="#">Register</a>
+         <a href="#" onclick="registerUser(); return false;">Register</a>
       </p>
    </form>
 </body>
+
 </html>
