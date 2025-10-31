@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tawazon — حاسبة الوزن والصحة</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root{
+      --bg:#f4f8f4;--card:#fff;--accent:#2e7d32;--muted:#666;
+      --primary-color:#4caf50;--secondary-color:#fff;--third-color:#333;
+      --shadow-light:0 4px 8px rgba(0, 255, 102, 0.219);
+      --shadow-strong:0 8px 16px #4caf4fc4;
+    }
+    [data-theme="dark"]{
+      --bg:#0f1720;--card:#071014;--accent:#4caf50;--muted:#9aa4a6;
+      --third-color:#fff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;font-family:Arial, sans-serif;line-height:1.8;background:var(--bg);color:var(--third-color);display:flex;flex-direction:column;font-size:16px}
+    header{background:var(--accent);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:1000;border-radius:0 0 12px 12px;}
+    header .brand{font-weight:700;font-size:20px}
+    header .brand span{color:#ffeb3b}
+    .main-nav .nav_ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;flex-wrap:wrap;}
+    .main-nav .nav_li a{text-decoration:none;color:#fff;font-weight:600;padding:6px 12px;border-radius:8px;transition:0.3s}
+    .main-nav .nav_li a:hover,
+    main{flex:1;padding:20px;max-width:1100px;margin:18px auto;width:95%}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:var(--shadow-light)}
+    h2{margin:0 0 12px 0;color:var(--accent);text-align:right}
+    label{display:block;font-size:14px;margin-bottom:6px;color:var(--muted);text-align:right}
+    input,select,button,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef0;font-size:15px}
+    .row{display:flex;gap:12px}
+    .row .col{flex:1}
+    .btn{background:var(--accent);color:#fff;border:none;padding:10px 12px;border-radius:8px;cursor:pointer;font-weight:700;transition:0.2s}
+    .btn:hover{opacity:0.9;transform:scale(1.02)}
+    .small{font-size:13px;color:var(--muted)}
+    .result{margin-top:12px;background:#e6f5ea;padding:12px;border-radius:8px;color:#08401a;border:1px solid #c7f0db}
+    .hidden{display:none}
+    @media(max-width:660px){.row{flex-direction:column}}
+    footer{padding:16px;text-align:center;color:#fff;background:var(--accent);margin-top:18px;border-radius:8px}
+    .flex{display:flex;gap:10px;align-items:center}
+    .actions{display:flex;gap:8px;justify-content:flex-end}
+    .muted{color:var(--muted);font-size:13px}
+    .chart-wrap{height:260px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><span>T</span>awa<span>z</span>on</div>
+    <nav class="main-nav">
+      <ul class="nav_ul">
+        <li class="nav_li"><a href="../index.html">Home</a></li>
+        <li class="nav_li"><a href="My_services/my_services.html">Service</a></li>
+        <li class="nav_li"><a href="Articles/Articles.html">Articles</a></li>
+        <li class="nav_li"><a href="contact/Contact.html">Contact</a></li>
+        <li class="nav_li"><a href="login/login.html">Login</a></li>
+      </ul>
+    </nav>
+    <div class="flex">
+      <button id="toggleTheme" class="btn" title="تبديل الوضع">🌙</button>
+    </div>
+  </header>
+
+  <main>
+    <h2 id="pageTitle">حاسبة الوزن — Tawazon</h2>
+    <section class="grid">
+      <!-- BMI Calculator -->
+      <div class="card" id="bmi">
+        <h2>حاسبة مؤشر كتلة الجسم (BMI)</h2>
+        <form id="bmiForm">
+          <div class="row">
+            <div class="col">
+              <label for="height">الطول (سم)</label>
+              <input id="height" type="number" min="50" max="300" placeholder="مثال: 167" required>
+            </div>
+            <div class="col">
+              <label for="weight">الوزن (كجم)</label>
+              <input id="weight" type="number" min="10" max="500" placeholder="مثال: 47" required>
+            </div>
+          </div>
+          <div class="row" style="margin-top:8px">
+            <div class="col">
+              <label for="age">العمر</label>
+              <input id="age" type="number" min="5" max="120" placeholder="مثال: 19" required>
+            </div>
+            <div class="col">
+              <label for="gender">الجنس</label>
+              <select id="gender">
+                <option value="male">ذكر</option>
+                <option value="female">أنثى</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:12px" class="actions">
+            <button class="btn" type="submit">احسب BMI</button>
+            <button id="saveEntry" type="button" class="btn" style="background:#136f5c">حفظ القياس</button>
+          </div>
+        </form>
+        <div id="bmiResult" class="result hidden" aria-live="polite"></div>
+      </div>
+
+      <!-- Calories Calculator -->
+      <div class="card" id="calories">
+        <h2>حاسبة السعرات اليومية (تقريبية)</h2>
+        <form id="calForm">
+          <label for="activity">مستوى النشاط</label>
+          <select id="activity">
+            <option value="1.2">قليل الحركة</option>
+            <option value="1.375">نشاط خفيف</option>
+            <option value="1.55">نشاط متوسط</option>
+            <option value="1.725">نشاط عالي</option>
+            <option value="1.9">نشاط مُكثف</option>
+          </select>
+          <div class="row" style="margin-top:8px">
+            <div class="col">
+              <label for="goalWeight">الوزن المستهدف (كجم)</label>
+              <input id="goalWeight" type="number" placeholder="اختياري"> 
+            </div>
+            <div class="col">
+              <label for="goalType">الهدف</label>
+              <select id="goalType">
+                <option value="maintain">الحفاظ</option>
+                <option value="lose">خسارة وزن</option>
+                <option value="gain">زيادة وزن</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:12px" class="actions">
+            <button class="btn" type="submit">احسب السعرات</button>
+          </div>
+        </form>
+        <div id="calResult" class="result hidden"></div>
+      </div>
+
+      <!-- Weight Log + Chart -->
+      <div class="card">
+        <h2>سجل الوزن & الرسم البياني</h2>
+        <div class="row">
+          <div class="col">
+            <label for="entryDate">التاريخ</label>
+            <input id="entryDate" type="date">
+          </div>
+          <div class="col">
+            <label for="entryWeight">الوزن (كجم)</label>
+            <input id="entryWeight" type="number" placeholder="مثال: 47">
+          </div>
+        </div>
+        <div style="margin-top:12px" class="actions">
+          <button id="addLog" class="btn">أضف للسجل</button>
+          <button id="clearLog" class="btn" style="background:#a22">مسح السجل</button>
+        </div>
+        <p class="muted" style="margin-top:12px">يمكنك حفظ القياسات والنصائح والاطلاع عليها لاحقًا. البيانات تُخزن محليًا على جهازك.</p>
+        <div class="chart-wrap" style="margin-top:12px"><canvas id="weightChart"></canvas></div>
+      </div>
+    </section>
+
+    <section style="max-width:1100px;margin:18px auto;display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end">
+      <button id="shareBtn" class="btn">مشاركة النتيجة</button>
+      <button id="printBtn" class="btn">طباعة</button>
+    </section>
+  </main>
+
+  <footer>© 2024 Tawazon — كل الحقوق محفوظة</footer>
+
+<script>
+// ======= Helpers: Storage =======
+const STORAGE_KEY='tawazon_weight_log_v2';
+function loadLog(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }catch(e){return []} }
+function saveLog(list){ localStorage.setItem(STORAGE_KEY,JSON.stringify(list)); }
+
+// ======= Show Message =======
+function showMessage(el, html, isError=false){
+  el.innerHTML=html;
+  el.classList.remove('hidden');
+  el.style.border=isError?'1px solid #ffb3b3':'1px solid #c7f0db';
+}
+
+// ======= BMI Logic =======
+const bmiForm=document.getElementById('bmiForm');
+const bmiResult=document.getElementById('bmiResult');
+const saveEntryBtn=document.getElementById('saveEntry');
+function classifyBMI(bmi){
+  if(bmi<18.5) return {label:'نحيف',color:'#d97706'};
+  if(bmi<25) return {label:'طبيعي',color:'#16a34a'};
+  if(bmi<30) return {label:'زيادة وزن',color:'#f59e0b'};
+  return {label:'سمنة',color:'#dc2626'};
+}
+
+bmiForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const h = parseFloat(document.getElementById('height').value);
+  const w = parseFloat(document.getElementById('weight').value);
+  const age = parseInt(document.getElementById('age').value,10);
+  const gender = document.getElementById('gender').value;
+  if(!h||!w||!age){showMessage(bmiResult,'الرجاء إدخال الطول والوزن والعمر بشكل صحيح.',true);return;}
+  const hw=h/100;
+  const bmi=w/(hw*hw);
+  const bmiR=Math.round(bmi*10)/10;
+  const min=Math.round(18.5*hw*hw*10)/10;
+  const max=Math.round(24.9*hw*hw*10)/10;
+  const cls=classifyBMI(bmi);
+
+  let advice='';
+  if(bmi<18.5) advice=`قد تحتاج لزيادة ~ ${(min-w).toFixed(1)} كجم للوصول للنطاق الطبيعي.<br>نصائح: تناول وجبات عالية البروتين، المكسرات، تمارين القوة.`;
+  else if(bmi<25) advice='أنت ضمن الوزن الطبيعي. نصائح: الحفاظ على نمط حياة صحي.';
+  else if(bmi<30) advice=`قد تحتاج لنقص ~ ${(w-max).toFixed(1)} كجم للوصول للنطاق الطبيعي. نصائح: تقليل السكريات، زيادة النشاط البدني.`;
+  else advice=`قد تحتاج لفقدان الوزن. نصائح: استشر أخصائي تغذية، نظام متوازن، ممارسة الرياضة.`;
+
+  const html=`<div style="font-weight:700">BMI: ${bmiR} — <span style='color:${cls.color}'>${cls.label}</span></div>
+  <div style="margin-top:8px">الوزن الصحي لطول ${h} سم: <strong>${min} - ${max} كجم</strong></div>
+  <div style="margin-top:8px">${advice}</div>
+  <div class="small" style="margin-top:6px">ملاحظة: تقدير مبني على BMI فقط.</div>`;
+  showMessage(bmiResult,html);
+});
+
+saveEntryBtn.addEventListener('click', function(){
+  const h = parseFloat(document.getElementById('height').value);
+  const w = parseFloat(document.getElementById('weight').value);
+  if(!h || !w){alert('أدخل الطول والوزن قبل الحفظ'); return;}
+  const hw = h/100;
+  const bmi = w/(hw*hw);
+  const cls = classifyBMI(bmi);
+  let advice='';
+  if(bmi<18.5) advice=`قد تحتاج لزيادة ~ ${(18.5*hw*hw-w).toFixed(1)} كجم للوصول للنطاق الطبيعي. نصائح: تناول وجبات عالية البروتين، المكسرات، تمارين القوة.`;
+  else if(bmi<25) advice='أنت ضمن الوزن الطبيعي. نصائح: الحفاظ على نمط حياة صحي.';
+  else if(bmi<30) advice=`قد تحتاج لنقص ~ ${(w-24.9*hw*hw).toFixed(1)} كجم للوصول للنطاق الطبيعي. نصائح: تقليل السكريات، زيادة النشاط البدني.`;
+  else advice=`قد تحتاج لفقدان الوزن. نصائح: استشر أخصائي تغذية، نظام متوازن، ممارسة الرياضة.`;
+
+  const date = new Date().toISOString().slice(0,10);
+  const list = loadLog();
+  list.push({date, weight: w, bmi: Math.round(bmi*10)/10, advice});
+  saveLog(list);
+  updateChart();
+  alert('تم حفظ القياس مع النصائح محليًا');
+});
+
+// ======= Calories calculator =======
+const calForm=document.getElementById('calForm');
+const calResult=document.getElementById('calResult');
+calForm.addEventListener('submit',function(e){
+  e.preventDefault();
+  const h=parseFloat(document.getElementById('height').value);
+  const w=parseFloat(document.getElementById('weight').value);
+  const age=parseInt(document.getElementById('age').value,10);
+  const gender=document.getElementById('gender').value;
+  const activity=parseFloat(document.getElementById('activity').value);
+  const goal=document.getElementById('goalType').value;
+  if(!h||!w||!age){showMessage(calResult,'الرجاء إدخال الطول والوزن والعمر في قسم BMI أولًا.',true);return;}
+  let bmr=10*w+6.25*h-5*age+(gender==='male'?5:-161);
+  let tdee=Math.round(bmr*activity);
+  let target=tdee;if(goal==='lose')target=Math.round(tdee-500);if(goal==='gain')target=Math.round(tdee+400);
+  const html=`السعرات اليومية التقديرية: <strong>${tdee} kcal</strong><br>للهدف (${goal}): <strong>${target} kcal</strong>
+  <div class="small" style="margin-top:6px">ملاحظة: هذه أرقام تقريبية. استشر أخصائي تغذية للخطط الدقيقة.</div>`;
+  showMessage(calResult,html);
+});
+
+// ======= Weight log chart with advice on click =======
+const ctx=document.getElementById('weightChart').getContext('2d');
+let weightChart=null;
+
+function prepareChart(labels,data,advices){
+  if(weightChart) weightChart.destroy();
+  weightChart = new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets:[{label:'الوزن (كجم)',data,fill:false,tension:0.3,borderDash:[5,5],borderColor:getComputedStyle(document.documentElement).getPropertyValue('--accent')||'#2e7d32',pointHoverRadius:8,pointBackgroundColor:'#4caf50'}]},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      onClick: function(evt, elems){
+        if(elems.length>0){
+          const idx=elems[0].index;
+          alert(`تاريخ: ${labels[idx]}\nالوزن: ${data[idx]} كجم\nنصائح: ${advices[idx]}`);
+        }
+      }
+    }
+  });
+}
+
+function updateChart(){
+  const list = loadLog();
+  list.sort((a,b)=>a.date.localeCompare(b.date));
+  const labels=list.map(x=>x.date);
+  const data=list.map(x=>x.weight);
+  const advices=list.map(x=>x.advice);
+  if(labels.length===0){prepareChart(['لا توجد بيانات'],[0],['']); return;}
+  prepareChart(labels,data,advices);
+}
+
+document.getElementById('addLog').addEventListener('click',function(){
+  const date=document.getElementById('entryDate').value||new Date().toISOString().slice(0,10);
+  const w=parseFloat(document.getElementById('entryWeight').value);
+  if(!w){alert('أدخل قيمة الوزن'); return;}
+  const list=loadLog(); list.push({date,weight:w,bmi:null,advice:'لا توجد نصائح'}); saveLog(list); updateChart(); document.getElementById('entryWeight').value=''; alert('تم إضافة القياس');
+});
+
+document.getElementById('clearLog').addEventListener('click',function(){
+  if(!confirm('سيتم مسح كل السجلات المخزنة محليًا. هل تريد المتابعة؟')) return;
+  localStorage.removeItem(STORAGE_KEY); updateChart();
+});
+
+updateChart();
+
+// ======= Theme toggle =======
+const toggleTheme=document.getElementById('toggleTheme'); const THEME_KEY='tawazon_theme';
+function applyTheme(name){
+  document.documentElement.setAttribute('data-theme',name);
+  localStorage.setItem(THEME_KEY,name);
+  toggleTheme.textContent=name==='dark'?'🌞':'🌙';
+}
+const savedTheme=localStorage.getItem(THEME_KEY) || (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+applyTheme(savedTheme);
+toggleTheme.addEventListener('click',()=>{applyTheme(localStorage.getItem(THEME_KEY)==='dark'?'light':'dark');});
+
+// ======= Print & Share =======
+document.getElementById('printBtn').addEventListener('click',()=>window.print());
+document.getElementById('shareBtn').addEventListener('click',async()=>{
+  const text=document.getElementById('bmiResult').innerText||'نتيجتي من Tawazon';
+  try{await navigator.share({title:'نتيجة BMI — Tawazon',text});alert('تمت المشاركة')}
+  catch(e){prompt('انسخ هذه النتيجة للمشاركة:',text);}
+});
+</script>
+</body>
+</html>
